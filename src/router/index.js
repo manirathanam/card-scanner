@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import Layout from "../views/Layout.vue";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -10,7 +10,7 @@ const router = createRouter({
       component: Layout
     },
     {
-      path: '/card-scanner/login',
+      path: '/login',
       name: 'login',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
