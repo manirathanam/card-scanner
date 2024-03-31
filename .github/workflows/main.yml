@@ -22,7 +22,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-github-pages@v1
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages # You can set a custom branch here
