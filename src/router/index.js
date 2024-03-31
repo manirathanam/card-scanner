@@ -10,7 +10,7 @@ const router = createRouter({
       component: Layout
     },
     {
-      path: '/login',
+      path: '/card-scanner/login',
       name: 'login',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
