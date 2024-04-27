@@ -1,145 +1,60 @@
 <template>
-    <div>
-        <div class="p-2">
-
-            <ScrollArea class="h-[500px] rounded-md border p-4">
-                <div class="m-2" v-for="row in table.getRowModel().rows" :key="row.id">
-                    <ContactCard :firstName="row.getAllCells()[0].getValue()"
-                        :lastName="row.getAllCells()[1].getValue()" :email="row.getAllCells()[2].getValue()"
-                        :phone="row.getAllCells()[3].getValue()" :website="row.getAllCells()[4].getValue()">
-                    </ContactCard>
-                </div>
-            </ScrollArea>
-
+    <div class="p-8 flex items-center justify-center">
+        <Card class="w-2/4 mt-8" v-if="processing">
+            <CardHeader>
+                <CardTitle>Fetching Data</CardTitle>
+                <CardDescription class="p-4">
+                    <Progress v-model="progress" />
+                </CardDescription>
+            </CardHeader>
+            <CardContent></CardContent>
+        </Card>
+        <div class="grid xl:grid-cols-3 grid-cols-1 md:grid-cols-2 gap-4">
+            <template v-for="contact in contactsData">
+                <ContactCard v-bind="contact"></ContactCard>
+            </template>
         </div>
     </div>
 </template>
 <script setup>
+
+import { ref } from "vue";
+import { db } from "../firebase.js";
+import { collection, getDocs } from "firebase/firestore";
 import {
-    FlexRender,
-    getCoreRowModel,
-    useVueTable,
-    createColumnHelper,
-} from '@tanstack/vue-table';
-import { ref, h } from 'vue'
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card'
+import { Progress } from '@/components/ui/progress'
 import ContactCard from "@/components/ui/ContactCard.vue";
-import { ScrollArea } from '@/components/ui/scroll-area';
-
-const columnHelper = createColumnHelper();
-
-const columns = [
-    columnHelper.accessor('firstName', {
-        cell: (row) => {
-            return h('div', { class: 'text-right font-medium' }, row.getValue())
-        }
-    }),
-    columnHelper.accessor('lastName', {
-        cell: (row) => {
-            return h('div', { class: 'text-right font-medium' }, row.getValue())
-        }
-    }),
-    columnHelper.accessor('email', {
-        cell: (row) => {
-            return h('div', { class: 'text-right font-medium' }, row.getValue())
-        }
-    }),
-    columnHelper.accessor('phone', {
-        cell: (row) => {
-            return h('div', { class: 'text-right font-medium' }, row.getValue())
-        }
-    }),
-    columnHelper.accessor('website', {
-        cell: (row) => {
-            return h('div', { class: 'text-right font-medium' }, row.getValue())
-        }
-    }),
-];
-
-const defaultData = [
-    {
-        firstName: 'Manirathanam',
-        lastName: 'M',
-        email: 'manirathanam@gmail.com',
-        phone: 9965049534,
-        website: 'www.google.com',
-    },
-    {
-        firstName: 'Kevin',
-        lastName: 'Malone',
-        email: 'kevin@office.com',
-        phone: 9934231219,
-        website: 'www.office.com',
-    },
-    {
-        firstName: 'Michel',
-        lastName: 'Scott',
-        email: 'michel@office.com',
-        phone: 93453312321,
-        website: 'www.office.com',
-    },
-    {
-        firstName: 'Manirathanam',
-        lastName: 'M',
-        id: "firstName",
-        email: 'manirathanam@gmail.com',
-        phone: 9965049534,
-        website: 'www.google.com',
-    },
-    {
-        firstName: 'Kevin',
-        lastName: 'Malone',
-        email: 'kevin@office.com',
-        phone: 9934231219,
-        website: 'www.office.com',
-    },
-    {
-        firstName: 'Michel',
-        lastName: 'Scott',
-        email: 'michel@office.com',
-        phone: 93453312321,
-        website: 'www.office.com',
-    },
-    {
-        firstName: 'Manirathanam',
-        lastName: 'M',
-        id: "firstName",
-        email: 'manirathanam@gmail.com',
-        phone: 9965049534,
-        website: 'www.google.com',
-    },
-    {
-        firstName: 'Kevin',
-        lastName: 'Malone',
-        email: 'kevin@office.com',
-        phone: 9934231219,
-        website: 'www.office.com',
-    },
-    {
-        firstName: 'Michel',
-        lastName: 'Scott',
-        email: 'michel@office.com',
-        phone: 93453312321,
-        website: 'www.office.com',
-    },
-];
-
-const data = ref(defaultData)
 
 
-const table = useVueTable({
-    get data() {
-        return data.value
-    },
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-})
-
-console.log(table.getRowModel().rows);
+let contactsData = ref([]);
+const progress = ref(1);
+let timer = "";
+let processing = ref(true);
 
 
-const rerender = () => {
-    data.value = defaultData
+async function fetchData() {
+    let userData = [];
+    const querySnapshot = await getDocs(collection(db, "contacts"));
+    querySnapshot.forEach((doc) => {
+        userData.push({ ...doc.data(), id: doc.id });
+    });
+    console.log(userData);
+    contactsData.value = userData;
+    processing.value = false;
+    clearInterval(timer)
 }
 
+setTimeout(fetchData, 3000)
 
+
+timer = setInterval(() => {
+    progress.value = progress.value + 1;
+}, 100)
 </script>

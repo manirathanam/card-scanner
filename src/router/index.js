@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import Layout from '../views/Layout.vue'
+import AuthGuard from '../router/authGuard.js'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -12,7 +13,14 @@ const router = createRouter({
         {
           path: '/list',
           name: 'list',
+          beforeEnter: AuthGuard,
           component: () => import('../views/List.vue')
+        },
+        {
+          path: '/create',
+          name: 'create',
+          beforeEnter: AuthGuard,
+          component: () => import('../views/Create.vue')
         }
       ]
     },

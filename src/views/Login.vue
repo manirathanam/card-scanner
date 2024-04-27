@@ -10,17 +10,17 @@
 
                     <div class="flex gap-2 flex-col">
                         <Label>Email</Label>
-                        <Input type="email"></Input>
+                        <Input type="email" v-model="email"></Input>
                     </div>
                     <div class="flex gap-2 flex-col">
                         <Label>Password</Label>
-                        <Input type="password"></Input>
+                        <Input type="password" v-model="password"></Input>
                     </div>
                 </div>
 
             </CardContent>
             <CardFooter class="flex flex-col px-6 pb-6 gap-2">
-                <Button variant="outline">
+                <Button variant="outline" @click="signin">
                     Login
                 </Button>
                 <Button variant="link">
@@ -42,7 +42,21 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { auth } from "../firebase.js";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { ref } from "vue";
+import { useRouter } from 'vue-router';
+
+let email = ref("");
+let password = ref("");
+
+let router = useRouter();
 
 
+function signin() {
+    signInWithEmailAndPassword(auth, email.value, password.value).then((res) => {
+        router.push("/list");
+    }).catch((rej) => { console.log(rej) })
+}
 
 </script>

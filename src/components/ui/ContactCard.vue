@@ -1,13 +1,14 @@
 <template>
-    <div class="w-full flex border border-solid border-white p-3 rounded-lg gap-8 items-center">
-        <div
-            class="w-16 md:rounded-full  rounded-sm h-16 bg-white text-blue-500 flex items-center justify-center font-bold">
-            {{ firstName[0] }}{{ lastName[0] }}
-        </div>
+    <div
+        class="w-full flex bg-white  p-3 rounded-lg gap-8 items-center shadow-sm hover:shadow-lg hover:bg-slate-200 transition-all">
+        <!-- <div
+            class="w-16  md:rounded-full  rounded-sm h-16 bg-blue-500 text-white flex items-center justify-center font-bold">
+            {{ firstname[0] }}{{ lastname[0] }}
+        </div> -->
         <div class="flex w-full flex-col gap-2 ">
             <div class="flex w-full md:gap-8 flex-col gap-2 md:flex-row">
-                <label class="w-40">{{ firstName }} {{ lastName }}</label>
-                <label>{{ email }}</label>
+                <label class="w-40">{{ firstname }} {{ lastname }}</label>
+                <label class="text-wrap break-words overflow-ellipsis overflow-hidden">{{ email }}</label>
             </div>
             <div class="flex w-full md:gap-8 flex-col gap-2 md:flex-row">
                 <label class="w-40">{{ phone }}</label>
@@ -19,10 +20,10 @@
 <script setup>
 
 const props = defineProps({
-    firstName: {
+    firstname: {
         type: String,
     },
-    lastName: {
+    lastname: {
         type: String,
     },
     phone: {
@@ -33,6 +34,9 @@ const props = defineProps({
     },
     website: {
         type: String,
+    },
+    companyname: {
+        type: String
     }
 })
 </script>
