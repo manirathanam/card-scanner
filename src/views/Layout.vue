@@ -1,6 +1,6 @@
 <template>
     <div class="bg-gradient-to-r from-blue-300 min-h-screen">
-        <header class="w-full relative top-0 p-2 bg-white shadow-md">
+        <header class="w-full relative top-0 p-2 px-4 bg-white shadow-md">
             <div class="flex gap-4 justify-between items-center">
                 <div class="flex gap-4 items-center">
                     <RouterLink to="/list">

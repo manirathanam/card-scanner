@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center pt-8">
-        <Card class="w-1/2">
+        <Card class="md:w-1/2 w-10/12">
             <CardHeader>
                 <CardTitle>Create</CardTitle>
                 <CardDescription>Add new business card.</CardDescription>
@@ -8,7 +8,7 @@
             <CardContent>
                 <div class="grid gap-4">
 
-                    <div class="grid gap-4 grid-cols-2">
+                    <div class="grid gap-4 grid-cols-1 md:grid-cols-2">
 
                         <div class="grid gap-2">
                             <Label>First Name</Label>
@@ -20,7 +20,7 @@
                         </div>
                     </div>
 
-                    <div class="grid gap-4 grid-cols-2">
+                    <div class="grid gap-4 grid-cols-1 md:grid-cols-2">
 
                         <div class="grid gap-2">
                             <Label>Website</Label>
@@ -53,7 +53,7 @@
                     Create
                 </Button>
                 <Button variant="ghost" @click="uploadFile">
-                    Auto Create by Scanning
+                    Auto Fill by Scanning QR
                 </Button>
             </CardFooter>
 
