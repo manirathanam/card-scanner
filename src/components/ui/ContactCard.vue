@@ -6,18 +6,26 @@
             {{ firstname[0] }}{{ lastname[0] }}
         </div> -->
         <div class="flex w-full flex-col gap-2 ">
-            <div class="flex w-full md:gap-8 flex-col gap-2 md:flex-row">
-                <label class="w-40">{{ firstname }} {{ lastname }}</label>
-                <label class="text-wrap break-words overflow-ellipsis overflow-hidden">{{ email }}</label>
+            <div class="flex w-full md:gap-8 flex-col gap-2 md:flex-row justify-between">
+                <Label class="text-lg"> 👤 {{ firstname }} {{ lastname }}</Label>
+                <a :href="`mailto:${email}`" target="_blank">
+                    <Label class="text-md">💌 {{ email }}</Label>
+                </a>
             </div>
-            <div class="flex w-full md:gap-8 flex-col gap-2 md:flex-row">
-                <label class="w-40">{{ phone }}</label>
-                <label>{{ website }}</label>
+            <div class="flex w-full md:gap-8 flex-col gap-2 md:flex-row justify-between">
+                <a class="" :href="`tel:${phone}`">
+                    <Label class="text-md">📞 {{ phone }}</Label>
+                </a>
+                <a :href="website" target="_blank">
+                    <Label class="text-md">🌍 {{ website }}</Label>
+                </a>
             </div>
         </div>
     </div>
 </template>
 <script setup>
+import { Label } from '@/components/ui/label'
+
 
 const props = defineProps({
     firstname: {

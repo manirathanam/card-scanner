@@ -1,5 +1,5 @@
 <template>
-    <div class="p-8 flex items-center justify-center">
+    <div class="md:p-8 p-4 flex items-center justify-center">
         <Card class="w-2/4 mt-8" v-if="processing">
             <CardHeader>
                 <CardTitle>Fetching Data</CardTitle>
@@ -9,7 +9,7 @@
             </CardHeader>
             <CardContent></CardContent>
         </Card>
-        <div class="grid xl:grid-cols-3 grid-cols-1 md:grid-cols-2 gap-4">
+        <div v-else class="grid xl:grid-cols-3 grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <template v-for="contact in contactsData">
                 <ContactCard v-bind="contact"></ContactCard>
             </template>

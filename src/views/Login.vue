@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-gradient-to-r from-blue-300 w-lvw h-lvh flex items-center justify-center">
-        <Card class="w-[450px]">
+    <div class="bg-gradient-to-r from-blue-300 w-lvw h-lvh flex items-center  justify-center">
+        <Card class="md:w-[450px] w-full md:h-auto h-auto ">
             <CardHeader>
                 <CardTitle>Card Scanner</CardTitle>
                 <CardDescription>Scan Business cards in one-click.</CardDescription>

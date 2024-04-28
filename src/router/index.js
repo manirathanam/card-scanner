@@ -17,6 +17,12 @@ const router = createRouter({
           component: () => import('../views/List.vue')
         },
         {
+          path: '',
+          name: 'landing',
+          beforeEnter: AuthGuard,
+          component: () => import('../views/List.vue')
+        },
+        {
           path: '/create',
           name: 'create',
           beforeEnter: AuthGuard,

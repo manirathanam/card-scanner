@@ -44,18 +44,21 @@
                     </div>
                 </div>
 
-
+                <Label v-for="error in formError" class="text-red-400">
+                    {{ error }}
+                </Label>
             </CardContent>
             <CardFooter class="flex flex-col px-6 pb-6 gap-2">
                 <Button variant="outline" @click="submitForm">
                     Create
                 </Button>
-                <Button variant="ghost">
+                <Button variant="ghost" @click="uploadFile">
                     Auto Create by Scanning
                 </Button>
             </CardFooter>
 
         </Card>
+        <input type="file" @change="processFile" accept="image/*" capture="camera" class="hidden" ref="fileInput" />
         <Dialog :open="processingInfo">
             <DialogContent>
                 <DialogHeader>
@@ -72,6 +75,31 @@
                 </DialogFooter> -->
             </DialogContent>
         </Dialog>
+
+        <Dialog :open="processingQR">
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Processing QR...</DialogTitle>
+                    <DialogDescription>
+                        <div v-if="QRdata">
+                            <div>QR data</div>
+                            <div>{{ QRdata }}</div>
+                        </div>
+                        <span v-else>
+                            Please wait while we processing QR information.
+                        </span>
+
+                    </DialogDescription>
+                </DialogHeader>
+
+                <DialogFooter>
+                    <Button variant="ghost" @click="addQRDataToForm">
+                        Add to Form
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+
     </div>
 </template>
 <script setup>
@@ -109,17 +137,28 @@ let email = ref("");
 let phoneNumber = ref("");
 let website = ref("");
 let company = ref("");
+let fileInput = ref("");
+let QRdata = ref("");
+let formError = ref([""]);
 
 let processingInfo = ref(false);
-
-console.log(auth.currentUser)
-
-
+let processingQR = ref(false);
 
 
 async function submitForm() {
+    formError.value = [];
+    if (!firstName.value) {
+        formError.value.push("First Name is required.")
+        return;
+    }
+    if (!website.value) {
+        formError.value.push("Website is required.")
+        return;
+    }
+    if (!website.value.startsWith("https://")) {
+        website.value = "https://" + website.value;
+    }
     processingInfo.value = true;
-    console.log(firstName.value, lastName.value, email.value, phoneNumber.value, website.value);
     let userData = {
         companyname: company.value,
         firstname: firstName.value,
@@ -130,12 +169,34 @@ async function submitForm() {
         ownerid: auth.currentUser.uid,
     }
     const docRef = await addDoc(collection(db, "contacts"), userData);
-    debugger;
-    console.log(docRef)
     setTimeout(() => {
         processingInfo.value = false;
     }, 1000);
 }
 
+function uploadFile() {
+    fileInput.value.click();
+}
 
+function processFile(e) {
+    processingQR.value = true;
+    var reader = new FileReader()
+    reader.onload = (function (theFile) {
+        return function (e) {
+            qrcode.decode(e.target.result)
+        }
+    })(e.target.files[0]);
+
+    qrcode.callback = function (data) {
+        QRdata.value = data;
+    }
+    reader.readAsDataURL(e.target.files[0])
+
+}
+
+
+function addQRDataToForm() {
+    website.value = QRdata.value;
+    processingQR.value = false;
+}
 </script>
