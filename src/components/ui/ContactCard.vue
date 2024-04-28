@@ -5,7 +5,7 @@
             class="w-16  md:rounded-full  rounded-sm h-16 bg-blue-500 text-white flex items-center justify-center font-bold">
             {{ firstname[0] }}{{ lastname[0] }}
         </div> -->
-        <div class="flex w-full flex-col gap-2 ">
+        <div class="flex w-full flex-col gap-2 justify-between h-full">
             <div class="flex w-full md:gap-8 flex-col gap-2 md:flex-row justify-between">
                 <Label class="text-lg"> 👤 {{ firstname }} {{ lastname }}</Label>
                 <a :href="`mailto:${email}`" target="_blank">
@@ -17,7 +17,9 @@
                     <Label class="text-md">📞 {{ phone }}</Label>
                 </a>
                 <a :href="website" target="_blank">
-                    <Label class="text-md">🌍 {{ website }}</Label>
+                    <Label class="text-md whitespace-normal overflow-hidden overflow-ellipsis break-all w-full">🌍 {{
+                        website
+                        }}</Label>
                 </a>
             </div>
         </div>

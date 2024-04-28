@@ -128,7 +128,7 @@ import {
 
 import { collection, addDoc } from "firebase/firestore";
 import { db, storage, auth } from "../firebase.js"; // Assuming your Firebase configuration is in a file named firebase.js
-
+import { useRouter } from 'vue-router';
 
 let $form = ref(null);
 let firstName = ref("");
@@ -140,6 +140,8 @@ let company = ref("");
 let fileInput = ref("");
 let QRdata = ref("");
 let formError = ref([""]);
+
+let router = useRouter();
 
 let processingInfo = ref(false);
 let processingQR = ref(false);
@@ -171,6 +173,7 @@ async function submitForm() {
     const docRef = await addDoc(collection(db, "contacts"), userData);
     setTimeout(() => {
         processingInfo.value = false;
+        router.push("/list");
     }, 1000);
 }
 
