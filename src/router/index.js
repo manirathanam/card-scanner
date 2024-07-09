@@ -3,7 +3,7 @@ import Layout from '../views/Layout.vue'
 import AuthGuard from '../router/authGuard.js'
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
