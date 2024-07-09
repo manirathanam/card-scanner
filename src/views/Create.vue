@@ -174,7 +174,7 @@ async function submitForm() {
     setTimeout(() => {
         processingInfo.value = false;
         router.push("/list");
-    }, 1000);
+    }, 500);
 }
 
 function uploadFile() {
@@ -191,7 +191,12 @@ function processFile(e) {
     })(e.target.files[0]);
 
     qrcode.callback = function (data) {
-        QRdata.value = data;
+        debugger;
+        if(data === "error decoding QR Code"){
+            QRdata.value = "";
+        }else {
+            QRdata.value = data;
+        }
     }
     reader.readAsDataURL(e.target.files[0])
 

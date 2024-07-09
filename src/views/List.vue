@@ -45,13 +45,12 @@ async function fetchData() {
     querySnapshot.forEach((doc) => {
         userData.push({ ...doc.data(), id: doc.id });
     });
-    console.log(userData);
     contactsData.value = userData;
     processing.value = false;
     clearInterval(timer)
 }
 
-setTimeout(fetchData, 3000)
+fetchData();
 
 
 timer = setInterval(() => {
